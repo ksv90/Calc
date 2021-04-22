@@ -1,0 +1,109 @@
+ul,
+p,
+h1 {
+	padding: 0;
+	margin: 0;
+}
+
+li {
+	list-style: none;
+}
+
+body {
+	margin: 0;
+	overflow: hidden;
+	height: 1000px;
+	background: url(./Фон.jpg) center no-repeat;
+}
+
+.calculator {
+	position: absolute;
+	top: 50px;
+	left: 300px;
+	width: 350px;
+	height: 550px;
+	min-width: 300px;
+	min-height: 500px;
+	background: #dededee6;
+	margin: 0 auto;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	user-select: none;
+}
+
+.calculator h1 {
+	text-transform: uppercase;
+	padding: 5px;
+	cursor: pointer;
+	padding-left: 20px;
+	font-weight: 300;
+}
+
+.entry_field {
+	padding: 10px;
+	display: flex;
+	flex-basis: 20%;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.entry_field #input {
+	text-align: right;
+	flex-basis: 60%;
+	background: transparent;
+	outline: none;
+	border: none;
+	font-size: 40px;
+	font-weight: 500;
+}
+
+.entry_field #output {
+	text-align: right;
+	flex-basis: 30%;
+	background: transparent;
+	outline: none;
+	border: none;
+	font-size: 20px;
+	color: #3c3c3c;
+}
+
+.keyboard {
+	display: flex;
+	flex-basis: 90%;
+	flex-wrap: wrap;
+	padding: 2px;
+	justify-content: space-between;
+}
+
+.keyboard li {
+	flex-basis: 20%;
+	flex-grow: 1;
+	margin: 2px;
+	align-items: stretch;
+	background: #ffffffcc;
+	display: flex;
+	border-radius: 2px;
+	cursor: pointer;
+	transition: 0.4s;
+}
+
+.keyboard li span {
+	margin: auto;
+}
+
+.keyboard li.other {
+	background: #e0e0e0cc;
+}
+
+.keyboard li.other2 {
+	background: #557ef1cc;
+}
+
+.keyboard li:hover {
+	background: #ababab;
+}
+
+.keyboard li.other2:hover {
+	background: #3100b8cc;
+}
