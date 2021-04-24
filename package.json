@@ -1,0 +1,23 @@
+{
+  "name": "Calc",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ksv90/Calc.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ksv90/Calc/issues"
+  },
+  "homepage": "https://github.com/ksv90/Calc#readme",
+  "devDependencies": {
+    "firebase-tools": "^9.10.0"
+  }
+}

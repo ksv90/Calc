@@ -1,0 +1,46 @@
+[debug] [2021-04-24T15:39:06.382Z] ----------------------------------------------------------------------
+[debug] [2021-04-24T15:39:06.384Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\KAESV\OneDrive\Рабочий стол\Calc\node_modules\firebase-tools\lib\bin\firebase.js init
+[debug] [2021-04-24T15:39:06.384Z] CLI Version:   9.10.0
+[debug] [2021-04-24T15:39:06.384Z] Platform:      win32
+[debug] [2021-04-24T15:39:06.384Z] Node Version:  v15.6.0
+[debug] [2021-04-24T15:39:06.385Z] Time:          Sat Apr 24 2021 18:39:06 GMT+0300 (GMT+03:00)
+[debug] [2021-04-24T15:39:06.385Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2021-04-24T15:39:06.387Z] >>> [apiv2][query] GET https://firebase-public.firebaseio.com/cli.json [none]
+[debug] [2021-04-24T15:39:06.404Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2021-04-24T15:39:06.404Z] > authorizing via signed-in user (KAESVE@mail.ru)
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  C:\Users\KAESV\OneDrive\Рабочий стол\Calc
+
+[debug] [2021-04-24T15:39:06.974Z] <<< [apiv2][status] GET https://firebase-public.firebaseio.com/cli.json 200
+[debug] [2021-04-24T15:39:06.974Z] <<< [apiv2][body] GET https://firebase-public.firebaseio.com/cli.json {"cloudBuildErrorAfter":1594252800000,"cloudBuildWarnAfter":1590019200000,"defaultNode10After":1594252800000,"minVersion":"3.0.5","node8DeploysDisabledAfter":1613390400000,"node8RuntimeDisabledAfter":1615809600000,"node8WarnAfter":1600128000000}
+[info] 
+=== Project Setup
+[info] 
+[info] First, let's associate this project directory with a Firebase project.
+[info] You can create multiple project aliases by running firebase use --add, 
+[info] but for now we'll just set up a default project.
+[info] 
+[debug] [2021-04-24T15:39:21.383Z] > refreshing access token with scopes: []
+[debug] [2021-04-24T15:39:21.384Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2021-04-24T15:39:21.546Z] <<< HTTP RESPONSE 200 {"date":"Sat, 24 Apr 2021 15:39:20 GMT","cache-control":"no-cache, no-store, max-age=0, must-revalidate","expires":"Mon, 01 Jan 1990 00:00:00 GMT","pragma":"no-cache","content-type":"application/json; charset=utf-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","server":"scaffolding on HTTPServer2","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2021-04-24T15:39:21.558Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects pageSize=100
+[debug] [2021-04-24T15:39:22.098Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects 200
+[debug] [2021-04-24T15:39:22.098Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects [omitted]
+[info] i  Using project my-calc-27a0b (my-calc) 
+[info] 
+=== Hosting Setup
+[info] 
+[info] Your public directory is the folder (relative to your project directory) that
+[info] will contain Hosting assets to be uploaded with firebase deploy. If you
+[info] have a build process for your assets, use your build's output directory.
+[info] 
