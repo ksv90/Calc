@@ -48,22 +48,18 @@ body {
 	justify-content: space-between;
 }
 
-.entry_field #input {
+.entry_field .input {
 	text-align: right;
 	flex-basis: 60%;
 	background: transparent;
-	outline: none;
-	border: none;
 	font-size: 40px;
 	font-weight: 500;
 }
 
-.entry_field #output {
+.entry_field .output {
 	text-align: right;
 	flex-basis: 30%;
 	background: transparent;
-	outline: none;
-	border: none;
 	font-size: 20px;
 	color: #3c3c3c;
 }

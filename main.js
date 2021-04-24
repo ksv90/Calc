@@ -1,13 +1,13 @@
 // элементы, начинающиеся с "$" - DOM-элементы
 // калькулятор можно перемещать, взяв его за верхнюю часть
-// ошибок много, я о них знаю ))
+// Infinity допустимый ответ
 
 const $calc = document.querySelector('.calculator')
 const $keyboard = $calc.querySelector('.keyboard')
-const $input = $calc.querySelector('#input')
-const $output = $calc.querySelector('#output')
+const $input = $calc.querySelector('.input')
+const $output = $calc.querySelector('.output')
 let expression = []
-let actualValue = 0
+let actualValue = '0'
 
 $keyboard.addEventListener('click', ({ target }) => {
 	const $button = target.closest('li')
@@ -23,10 +23,10 @@ document.addEventListener('keydown', ({ key }) => {
 })
 
 function setNumber(number) {
-	if (!Number.isInteger(+number)) return false
-	if (actualValue == null) actions('clear')
-	if (lastSymbol($output.innerHTML) === ')') actions('clear')
-	if (actualValue == 0) actualValue = ''
+	if (!isNumeric(+number)) return false
+	if (actualValue === '' && !isOperator()) actions('clear')
+	if (expression.join(' ') !== $output.innerHTML) actions('clear')
+	if (actualValue === '0') actualValue = ''
 	if (actualValue.length > 10) return
 	actualValue += number
 	$input.innerHTML = actualValue
@@ -35,89 +35,139 @@ function setNumber(number) {
 
 function setExpres(code, ...arr) {
 	if (code < 0) code = `(${code})`
-	expression.push(code, ...arr)
-	const str = expression.join(' ')
-	$output.innerHTML = str
+	if (lastSymbol(code.split('')) === '.') code = +code.splice(0, -1)
+	arr = arr.map(elem => '' + elem)
+	expression.push('' + code, ...arr)
+	$output.innerHTML = expression.join(' ')
 }
 
-function lastSymbol(str, delimiter = ' ') {
-	const arr = str.split(delimiter)
-	return arr[arr.length - 1]
+function lastSymbol(data) {
+	if (data) return data[data.length - 1]
+	return expression[expression.length - 1]
 }
 
-function setOperators(o) {
-	const last = lastSymbol($output.innerHTML)
-	if (['/', '*', '-', '+'].includes(last)) setExpres(0, o)
-	else setExpres(o)
+function isNumeric(data) {
+	if (typeof data === 'number' && !isNaN(data)) return true
+	return false
 }
 
-function calculate(exp) {
-	try {
-		const arr = exp.split(' ').map(elem => {
-			if (elem.includes('sqrt'))
-				return (elem = Math.sqrt(elem.slice(0, -1).slice(5)))
-			if (elem.includes('sqr'))
-				return (elem = Math.pow(elem.slice(0, -1).slice(4), 2))
-			if (elem.includes('(-')) return elem.slice(0, -1).slice(1)
-			return elem
-		})
-		const result = eval(arr.join(' '))
-		return (result ^ 0) === result ? result : result.toFixed(3)
-	} catch {
-		return 0
+function isOperator() {
+	return '/*-+'.includes(lastSymbol())
+}
+
+function calculate() {
+	expression = expression.map(elem => {
+		if (elem.includes('sqrt'))
+			return (elem = Math.sqrt(elem.slice(0, -1).slice(5)))
+		if (elem.includes('sqr'))
+			return (elem = Math.pow(elem.slice(0, -1).slice(4), 2))
+		if (elem.includes('(-')) return elem.slice(0, -1).slice(1)
+		if (elem.includes('%')) return '' + elem.slice(0, -1) / 100
+		return elem
+	})
+	while (consider()) {}
+	const result = expression[0]
+	if (String(result).length < 15) return result || 0
+	if (Number.isInteger(result)) return Infinity
+	return rain(String(result.toFixed(10)))
+}
+
+function rain(data) {
+	if (data.slice(-1) !== '0') return data
+	return rain(data.slice(0, -1))
+}
+
+function consider() {
+	for (let i = 0, len = expression.length; i < len; i++) {
+		const elem = expression[i]
+		if (Number.isInteger(elem)) continue
+		if (elem === '/') {
+			const res = expression[i - 1] / expression[i + 1]
+			expression.splice(i - 1, 3, res)
+			return true
+		}
+		if (elem === '*') {
+			const res = expression[i - 1] * expression[i + 1]
+			expression.splice(i - 1, 3, res)
+			return true
+		}
 	}
+	for (let i = 0, len = expression.length; i < len; i++) {
+		const elem = expression[i]
+		if (elem === '+') {
+			const res = +expression[i - 1] + +expression[i + 1]
+			expression.splice(i - 1, 3, res)
+			return true
+		}
+		if (elem === '-') {
+			const res = expression[i - 1] - expression[i + 1]
+			expression.splice(i - 1, 3, res)
+			return true
+		}
+	}
+	return false
 }
 
 function actions(code) {
 	switch (code) {
 		case 'Escape':
+		case 'Delete':
 		case 'clear':
-			actualValue = 0
+			actualValue = ''
 			$input.innerHTML = actualValue
 			$output.innerHTML = ''
 			expression = []
 			return true
 
 		case 'Backspace':
-			actualValue = String(actualValue)
-			if (actualValue.length === 1) actualValue = 0
+			if (actualValue.length === 1) actualValue = ''
 			if (actualValue.length > 1) actualValue = actualValue.slice(0, -1)
-			$input.innerHTML = actualValue
+			$input.innerHTML = +actualValue
 			break
 
 		case 'sqr': {
-			setExpres(`sqr(${parseFloat(actualValue)})`)
-			actualValue = 0
+			if (!expression.length || isOperator())
+				setExpres(`sqr(${parseFloat(actualValue) || 0})`)
+			actualValue = ''
 			break
 		}
 
 		case 'sqrt':
-			setExpres(`sqrt(${parseFloat(actualValue)})`)
-			actualValue = 0
+			if (!expression.length || isOperator())
+				setExpres(`sqrt(${parseFloat(actualValue) || 0})`)
+			actualValue = ''
 			break
 
 		case '%':
-			setExpres(parseFloat(actualValue) / 100)
-			actualValue = 0
+			if (actualValue !== '' && isNumeric(+actualValue))
+				setExpres(`${actualValue}%`)
+			actualValue = ''
 			break
 
 		case '/':
 		case '*':
 		case '-':
 		case '+':
-			if (actualValue !== 0) setExpres(parseFloat(actualValue))
-			setOperators(code)
-			actualValue = 0
+			const isOp = isOperator()
+			if (actualValue === '' && !expression.length) setExpres(0, code)
+			else if (!expression.length) setExpres(actualValue, code)
+			else if (actualValue !== '' && isOp) setExpres(actualValue, code)
+			else if (actualValue === '' && isOp) {
+				expression.splice(-1, 1)
+				setExpres(code)
+			} else setExpres(code)
+			actualValue = ''
 			break
 
 		case '+/-':
-			actualValue = parseFloat(actualValue) * -1
+			actualValue = '' + (parseFloat(actualValue) || 0) * -1
 			$input.innerHTML = actualValue
 			break
 
 		case ',':
-			if (actualValue.split('').includes('.')) break
-			$input.innerHTML = parseFloat(actualValue) + '.'
+			if (actualValue.includes('.')) break
+			actualValue = +actualValue + '.'
+			$input.innerHTML = actualValue
 			break
 
 		case '(':
@@ -130,13 +180,15 @@ function actions(code) {
 			exp.forEach(elem => (elem === '(' ? counter++ : null))
 			if (!counter) break
 			setExpres(parseFloat(actualValue), ')')
-			actualValue = 0
+			actualValue = ''
 			break
 		case 'Enter':
 		case '=':
-			if (actualValue !== 0) setExpres(parseFloat(actualValue))
-			$input.innerHTML = calculate($output.innerHTML)
-			actualValue = null
+			if (!expression.length) break
+			setExpres(actualValue)
+			actualValue = '' + calculate()
+			$input.innerHTML = actualValue
+			expression = []
 			break
 		default:
 			return false
@@ -160,6 +212,6 @@ document.addEventListener('mouseup', () => (moving.isMove = false))
 
 document.addEventListener('mousemove', ({ pageX, pageY }) => {
 	if (!moving.isMove) return
-	$calc.style.top = pageY - moving.y + 'px'
 	$calc.style.left = pageX - moving.x + 'px'
+	$calc.style.top = pageY - moving.y + 'px'
 })
