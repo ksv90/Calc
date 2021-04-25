@@ -9,17 +9,48 @@ li {
 	list-style: none;
 }
 
+button {
+	outline: none;
+	border: none;
+	padding: 15px 10px;
+	border-radius: 3px;
+	color: #e7e7e7;
+	transition: 0.2s;
+	cursor: pointer;
+}
+
 body {
 	margin: 0;
 	overflow: hidden;
 	height: 1000px;
 	background: url(./Фон.jpg) center no-repeat;
+	font-family: 'Roboto', sans-serif;
+}
+
+.btn {
+	margin: 100px;
+}
+
+.btn button {
+	background: #2e72f1;
+	font-family: inherit;
+	font-size: 16px;
+	font-weight: 600;
+	box-shadow: 1px 1px 2px 1px #e7e7e7;
+}
+
+.btn button:hover {
+	background: #0d46a1;
+	box-shadow: 1px 1px 1px 0 #e7e7e7;
+}
+
+.btn button:active {
+	box-shadow: none;
+	transform: scale(0.98);
 }
 
 .calculator {
 	position: absolute;
-	top: 50px;
-	left: 300px;
 	width: 350px;
 	height: 550px;
 	min-width: 300px;
@@ -30,17 +61,42 @@ body {
 	flex-direction: column;
 	justify-content: space-between;
 	user-select: none;
+	z-index: 1;
+	opacity: 0.8;
+	border: 1px solid #000;
 }
 
-.calculator h1 {
+.calculator_active {
+	z-index: 2;
+	opacity: 1;
+}
+
+.calculator__head {
+	display: flex;
+	justify-content: space-between;
+}
+
+.calculator__head h1 {
 	text-transform: uppercase;
 	padding: 5px;
 	cursor: pointer;
 	padding-left: 20px;
-	font-weight: 300;
+	font-weight: 600;
+	flex-grow: 1;
 }
 
-.entry_field {
+.calculator__head_close {
+	padding: 0 20px;
+	background: #f64848;
+	color: #dededee6;
+	border-top-right-radius: 0;
+}
+
+.calculator__head button:hover {
+	background: #e91313;
+}
+
+.calculator__entry-field {
 	padding: 10px;
 	display: flex;
 	flex-basis: 20%;
@@ -48,15 +104,15 @@ body {
 	justify-content: space-between;
 }
 
-.entry_field .input {
+.calculator__entry-field_input {
 	text-align: right;
 	flex-basis: 60%;
 	background: transparent;
 	font-size: 40px;
-	font-weight: 500;
+	font-weight: 600;
 }
 
-.entry_field .output {
+.calculator__entry-field_output {
 	text-align: right;
 	flex-basis: 30%;
 	background: transparent;
@@ -64,7 +120,7 @@ body {
 	color: #3c3c3c;
 }
 
-.keyboard {
+.calculator__keyboard {
 	display: flex;
 	flex-basis: 90%;
 	flex-wrap: wrap;
@@ -72,7 +128,7 @@ body {
 	justify-content: space-between;
 }
 
-.keyboard li {
+.calculator__keyboard li {
 	flex-basis: 20%;
 	flex-grow: 1;
 	margin: 2px;
@@ -84,22 +140,22 @@ body {
 	transition: 0.4s;
 }
 
-.keyboard li span {
+.calculator__keyboard li span {
 	margin: auto;
 }
 
-.keyboard li.other {
+.calculator__keyboard_other {
 	background: #e0e0e0cc;
 }
 
-.keyboard li.other2 {
+.calculator__keyboard_other2 {
 	background: #557ef1cc;
 }
 
-.keyboard li:hover {
+.calculator__keyboard li:hover {
 	background: #ababab;
 }
 
-.keyboard li.other2:hover {
+.calculator__keyboard_other2:hover {
 	background: #3100b8cc;
 }
