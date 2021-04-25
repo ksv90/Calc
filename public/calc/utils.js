@@ -11,6 +11,29 @@ export function isOperator(data) {
 	return '/*-+'.includes(lastSymbol(data))
 }
 
+export function isBrackets(expression) {
+	let counter = 0
+	expression.forEach(elem => {
+		if (elem === '(') counter++
+		else if (elem === ')') counter--
+	})
+	return counter
+}
+
+function isExpression(expression) {
+	let s = null
+	let f = null
+	for (let i = 0, len = expression.length; i < len; i++) {
+		const elem = expression[i]
+		if (elem === '(') s = i
+		else if (elem === ')') {
+			f = i
+			return [s, f - s + 1]
+		}
+	}
+	return null
+}
+
 export function calculate(expression) {
 	expression = expression.map(elem => {
 		if (elem.includes('sqrt'))
@@ -21,6 +44,14 @@ export function calculate(expression) {
 		if (elem.includes('%')) return '' + elem.slice(0, -1) / 100
 		return elem
 	})
+	let sf = isExpression(expression)
+	while (sf) {
+		let exp = expression.splice(...sf)
+		exp = exp.slice(0, -1).slice(1)
+		while (consider(exp)) {}
+		expression.splice(sf[0], 0, ...exp)
+		sf = isExpression(expression)
+	}
 	while (consider(expression)) {}
 	const result = expression[0]
 	if (String(result).length < 15) return result || 0
