@@ -133,7 +133,6 @@ body {
 	flex-grow: 1;
 	margin: 2px;
 	align-items: stretch;
-	background: #ffffffcc;
 	display: flex;
 	border-radius: 2px;
 	cursor: pointer;
@@ -142,6 +141,9 @@ body {
 
 .calculator__keyboard li span {
 	margin: auto;
+}
+.calculator__keyboard_number {
+	background: #ffffffcc;
 }
 
 .calculator__keyboard_other {
